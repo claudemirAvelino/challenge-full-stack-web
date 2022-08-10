@@ -1,6 +1,7 @@
 import { AppDataSource } from "./data-source"
 import { User } from "./entity/User";
 import express = require("express");
+import { routes } from "./routes";
 
 AppDataSource.initialize().then(async () => {
 
@@ -23,6 +24,7 @@ AppDataSource.initialize().then(async () => {
     app.use(
         express.json(),
         express.urlencoded({ extended: true }),
+        routes
     )
 
     app.listen(3333, () => {
