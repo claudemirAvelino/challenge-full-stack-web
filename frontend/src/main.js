@@ -4,8 +4,9 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import routes from './routes/index';
+import Maska from 'maska'
 loadFonts()
 
-createApp(App)
-  .use(vuetify).use(routes)
+createApp(App).
+    use(vuetify).use(routes).use(Maska)
   .mount('#app')
