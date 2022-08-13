@@ -31,6 +31,18 @@ class UserController {
         return response.json(result);
     }
 
+    async getById(request, response: Response) {
+        const { id } = request.params;
+        const userService = new UserService()
+        const result: User | Error = await userService.findById(id);
+        if(result instanceof Error){
+            return response.status(500).send(result.message)
+        }
+        const { name, email, ra, cpf } = result;
+
+        return response.json({id, name, email, ra, cpf});
+    }
+
     async edit(request, response: Response) {
         const userService = new UserService()
         const result = await userService.update(request.body);

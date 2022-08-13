@@ -20,11 +20,19 @@ export class UserService {
         }
     }
 
-    async find() {
+    async find(): Promise<User[] | Error> {
         try {
             const userRepository = AppDataSource.getRepository(User)
-            const users: User[] = await userRepository.find();
-            return users;
+            return await userRepository.find();
+        }catch (error) {
+            return new Error('server error' + error.message)
+        }
+    }
+
+    async findById(id): Promise<User | Error> {
+        try {
+            const userRepository = AppDataSource.getRepository(User)
+            return await userRepository.findOneBy({id});
         }catch (error) {
             return new Error('server error' + error.message)
         }
