@@ -14,7 +14,6 @@
     "core-js": "^3.8.3",
     "maska": "^1.5.0",
     "roboto-fontface": "*",
-    "v-mask": "^2.3.0",
     "vue": "^3.2.13",
     "vue-router": "4",
     "vuetify": "npm:@vuetify/nightly@next",
