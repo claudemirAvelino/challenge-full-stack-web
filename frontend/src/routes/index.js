@@ -1,19 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import HelloWorld from "@/components/HelloWorld";
-
-const Home = { template: '<div>Home</div>' }
-const Students = { template: '<div>Students</div>' }
+import StudentsList from "@/components/StudentsList";
+import SaveStudent from '@/components/SaveStudent';
 
 const routes = [
     {
-        path: '/',
-        name: 'Home',
-        Component: Home
+        path: '/students',
+        component: StudentsList
     },
     {
-        path: '/students',
-        name: 'Students',
-        Component: Students
+        path: '/save-student/:id',
+        component: SaveStudent
     }
 ]
 
