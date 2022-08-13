@@ -24,6 +24,7 @@
           :rules="raRules"
           label="RA"
           required
+          :disabled="this.$route.params.id !== '0'"
       ></v-text-field>
 
       <v-text-field
@@ -32,6 +33,7 @@
           label="CPF"
           v-maska="'###.###.###-##'"
           required
+          :disabled="this.$route.params.id !== '0'"
       ></v-text-field>
 
       <v-btn
@@ -52,6 +54,22 @@
       </v-btn>
     </v-form>
   </v-container>
+  <v-snackbar
+      v-model="snackbar"
+      vertical
+      color="error"
+  >
+    <div class="text-subtitle-1 pb-2">this.error</div>
+    <template v-slot:actions>
+      <v-btn
+          color="indigo"
+          variant="text"
+          @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -82,11 +100,12 @@ export default {
       email: '',
       ra: '',
       cpf: ''
-    }
+    },
+    snackbar: false,
+    error: ''
   }),
   async mounted() {
     const { id } = this.$route.params
-    console.log('id', id)
     if(id !== '0'){
       const result = await StudentService.getById(id)
       this.student = result.data;
@@ -100,7 +119,8 @@ export default {
           this.goBack();
         }
       }catch (e) {
-        console.log('erro', e.message)
+        this.error = e.message
+        this.snackbar = true;
       }
     },
     goBack () {

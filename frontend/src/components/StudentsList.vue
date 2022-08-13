@@ -18,13 +18,13 @@
     <thead>
     <tr>
       <th class="text-left">
-        Name
+        Registro Acadêmico
+      </th>
+      <th class="text-left">
+        Nome
       </th>
       <th class="text-left">
         E-mail
-      </th>
-      <th class="text-left">
-        Registro Acadêmico
       </th>
       <th class="text-left">
         CPF
@@ -39,9 +39,9 @@
         v-for="student in students"
         :key="student.name"
     >
+      <td>{{ student.ra }}</td>
       <td>{{ student.name }}</td>
       <td>{{ student.email }}</td>
-      <td>{{ student.ra }}</td>
       <td>{{ student.cpf }}</td>
       <td>
         <v-btn
@@ -54,12 +54,38 @@
             class="ma-1"
             color="black"
             icon="mdi-delete"
-            @click="deleteStudent(student.id)"
+            @click="deleteDialog(student.id)"
         ></v-btn>
       </td>
     </tr>
     </tbody>
   </v-table>
+
+  <v-dialog
+      v-model="dialog"
+      persistent
+  >
+    <v-card>
+      <v-card-text>Tem certeza que deseja excluir esse usuário?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+            color="red darken-1"
+            text
+            @click="dialog = false"
+        >
+          Cancelar
+        </v-btn>
+        <v-btn
+            color="green darken-1"
+            text
+            @click="deleteStudent(this.userId)"
+        >
+          Confirmar
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -80,6 +106,8 @@ export default {
       search: '',
       students: [
       ],
+      dialog: false,
+      userId: null,
     }
   },
   async mounted() {
@@ -87,6 +115,10 @@ export default {
     this.students.push(...students.data)
   },
   methods: {
+    deleteDialog(id) {
+      this.userId = id;
+      this.dialog = true;
+    },
     async deleteStudent(id) {
       try {
         const result = await StudentService.deleteStudent(id);
@@ -95,6 +127,8 @@ export default {
         }
       } catch (e) {
         console.log('erro', e.message)
+      } finally {
+        this.dialog = false;
       }
     },
     editStudent(id) {
