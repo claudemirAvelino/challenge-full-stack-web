@@ -19,31 +19,18 @@
             <v-list-item prepend-icon="mdi-account-multiple" title="Alunos" value="students">
             </v-list-item>
           </router-link>
-          <router-link to="/home">
-            <v-list-item prepend-icon="mdi-account-multiple" title="home" value="students">
-            </v-list-item>
-          </router-link>
         </v-list>
       </v-navigation-drawer>
 
       <v-app-bar app>
-        <v-toolbar class="text-center" title="HOME"></v-toolbar>
+        <v-toolbar class="text-center" title="Consulta de Alunos"></v-toolbar>
       </v-app-bar>
 
-      <!-- Sizes your content based upon application components -->
       <v-main>
         <router-view></router-view>
-
-        <!-- Provides the application the proper gutter -->
-<!--        <v-container fluid>
-
-          &lt;!&ndash; If using vue-router &ndash;&gt;
-
-        </v-container>-->
       </v-main>
 
       <v-footer app>
-        <!-- -->
       </v-footer>
     </v-app>
   </v-app>
@@ -63,6 +50,9 @@ export default {
   }),
 }
 </script>
-<style>
 
+<style>
+.v-list {
+  overflow: hidden;
+}
 </style>
