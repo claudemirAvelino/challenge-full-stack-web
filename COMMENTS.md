@@ -25,4 +25,4 @@ Melhorias
 - Melhoraria variáveis de ambiente tanto no frontend quanto no backend
 - Melhoraria os logs de erro
 - Iria analisar melhor o backend para desaclopar mais o código
-
+- Testes unitários
