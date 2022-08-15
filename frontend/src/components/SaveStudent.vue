@@ -54,29 +54,18 @@
       </v-btn>
     </v-form>
   </v-container>
-  <v-snackbar
-      v-model="snackbar"
-      vertical
-      color="error"
-  >
-    <div class="text-subtitle-1 pb-2">this.error</div>
-    <template v-slot:actions>
-      <v-btn
-          color="indigo"
-          variant="text"
-          @click="snackbar = false"
-      >
-        Close
-      </v-btn>
-    </template>
-  </v-snackbar>
 </template>
 
 <script>
 import StudentService from '@/service/StudentService';
+import { useToastStore } from '@/store/student';
 
 export default {
   name: 'SaveStudent',
+  setup () {
+    const toast = useToastStore();
+    return { toast }
+  },
   data: () => ({
     valid: true,
     nameRules: [
@@ -116,11 +105,11 @@ export default {
       try {
         const result = await StudentService.save(this.student)
         if(result.status === 204){
+          this.toast.setToast({ show: true, message: this.student.id === null ? 'Usuário cadastrado com sucesso!' : 'Usuário salvo com sucesso!' })
           this.goBack();
         }
       }catch (e) {
-        this.error = e.message
-        this.snackbar = true;
+        this.toast.setToast({ show: true, message: e.message })
       }
     },
     goBack () {

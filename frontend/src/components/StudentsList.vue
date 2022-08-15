@@ -86,10 +86,19 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      color="success"
+      variant="outlined"
+  >
+    {{message}}
+  </v-snackbar>
 </template>
 
 <script>
 import StudentService from '@/service/StudentService';
+import { useToastStore } from '@/store/student';
 import {
   mdiDelete,
   mdiPencil
@@ -97,6 +106,10 @@ import {
 
 export default {
   name: 'StudentsList',
+  setup () {
+    const toast = useToastStore();
+    return { toast }
+  },
   data() {
     return {
       icons: {
@@ -108,11 +121,21 @@ export default {
       ],
       dialog: false,
       userId: null,
+      snackbar: false,
+      message: ''
     }
   },
   async mounted() {
-    const students = await StudentService.getAll()
-    this.students.push(...students.data)
+    try {
+      const students = await StudentService.getAll()
+      this.students.push(...students.data)
+    }catch (e) {
+      console.log('error', e.message)
+    }
+
+    const { show, message } = this.toast.config
+    this.snackbar = show;
+    this.message = message;
   },
   methods: {
     deleteDialog(id) {

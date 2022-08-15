@@ -5,8 +5,10 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import routes from './routes/index';
 import Maska from 'maska'
+import { createPinia } from 'pinia'
+
 loadFonts()
 
 createApp(App).
-    use(vuetify).use(routes).use(Maska)
+    use(vuetify).use(routes).use(Maska).use(createPinia())
   .mount('#app')
