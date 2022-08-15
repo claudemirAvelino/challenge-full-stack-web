@@ -14,6 +14,9 @@ class StudentService {
     }
 
     save(student) {
+        if(student.id === null) {
+            return api.post('/users', student);
+        }
         return api.put('/users', student);
     }
 
