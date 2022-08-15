@@ -58,14 +58,11 @@ export class UserService {
 
     async delete(id) {
         try {
-            console.log('id', id)
             const userRepository = AppDataSource.getRepository(User)
             if(!(await userRepository.findOneBy({id}))){
-                console.log('entrou no if')
                 return new Error("User does not exists!")
             }
             await userRepository.delete(Number(id));
-            console.log('usuário deletado')
         } catch (error) {
             return new Error('server error' + error.message)
         }
