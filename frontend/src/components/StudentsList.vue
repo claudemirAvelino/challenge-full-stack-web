@@ -1,9 +1,9 @@
 <template>
-  <v-form>
+  <v-form @submit.prevent="submit">
     <v-container class="d-flex justify-space-around flex-column flex-sm-row">
-      <v-text-field v-model="search">
+      <v-text-field v-model="search" placeholder="Digite o nome" label="Digite o nome">
         <template #label>
-          <v-icon style="vertical-align: middle">
+          Pesquisar <v-icon style="vertical-align: middle">
           mdi-file-find
         </v-icon>
         </template>
@@ -36,7 +36,7 @@
     </thead>
     <tbody>
     <tr
-        v-for="student in students"
+        v-for="student in students.filter((studant) => studant.name.toLowerCase().includes(this.search.toLowerCase()))"
         :key="student.name"
     >
       <td>{{ student.ra }}</td>
@@ -156,7 +156,7 @@ export default {
     },
     editStudent(id) {
       this.$router.push(`/save-student/${id}`);
-    }
+    },
   }
 }
 </script>
